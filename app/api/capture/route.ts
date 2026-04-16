@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import React from 'react'
 import { renderToBuffer } from '@react-pdf/renderer'
-import { ReportPDF } from '@/components/ReportPDF'
+import { ReportPDF } from '../../components/ReportPDF'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
