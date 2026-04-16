@@ -1,7 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -15,6 +12,9 @@ function fmt(n: number): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const { Resend } = await import('resend')
+    const resend = new Resend(process.env.RESEND_API_KEY)
+
     const body = await req.json()
 
     const {
@@ -54,9 +54,7 @@ export async function POST(req: NextRequest) {
             <p style="font-size: 11px; color: #B8832A; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px;">Preempt Global</p>
             <h2 style="margin: 0; font-size: 22px; color: #0C1117;">Your RFI Exposure Report</h2>
           </div>
-
           <p>Based on your project inputs, here is your estimated change order exposure.</p>
-
           <table style="width: 100%; border-collapse: collapse; margin: 24px 0;">
             <tr style="border-bottom: 1px solid #eee;">
               <td style="padding: 10px 0; color: #888; font-size: 13px;">Project value</td>
@@ -107,20 +105,16 @@ export async function POST(req: NextRequest) {
               <td style="padding: 10px 0; font-weight: bold; text-align: right; color: #B8832A;">${fmt(residualLow)} - ${fmt(residualHigh)}</td>
             </tr>
           </table>
-
           <div style="background: #0C1117; border-top: 2px solid #B8832A; padding: 20px; margin: 24px 0;">
             <p style="color: #8899AA; font-size: 12px; margin: 0 0 8px;">Your residual exposure</p>
             <p style="color: #D4A84B; font-size: 24px; margin: 0; font-weight: bold;">${fmt(residualLow)} - ${fmt(residualHigh)}</p>
           </div>
-
           <p style="font-size: 13px; color: #555; line-height: 1.7;">
             This is the portion of your change order exposure that your design team cannot eliminate on its own. It requires an outside read of the documents the way your contractor will read them, before bid day. That is the gap Preempt Global closes.
           </p>
-
           <p style="margin-top: 24px;">
             <a href="https://preemptglobal.com" style="background: #B8832A; color: #0C1117; padding: 12px 24px; text-decoration: none; font-weight: bold; font-size: 13px;">Request a Red Flag Scan</a>
           </p>
-
           <hr style="border: none; border-top: 1px solid #eee; margin: 32px 0;" />
           <p style="color: #aaa; font-size: 11px; font-style: italic;">Paper mistakes are free. — Preempt Global</p>
         </div>
