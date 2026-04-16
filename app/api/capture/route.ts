@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
       })
     )
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL || 'tool@preemptglobal.com'
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'hello@preemptglobal.com'
 
     // Send email with PDF attached
     await resend.emails.send({
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
     // Also send a notification to yourself so you know someone used the tool
     await resend.emails.send({
       from: fromEmail,
-      to: 'YOUR_NOTIFICATION_EMAIL@preemptglobal.com',
+      to: 'hello@preemptglobal.com',
       subject: `New RFI calculator lead — ${email}`,
       html: `
         <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; color: #333;">
