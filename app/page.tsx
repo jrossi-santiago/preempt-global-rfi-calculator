@@ -51,7 +51,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-ink">
-
       <div className="relative overflow-hidden px-6 py-20 md:py-32">
         <div className="blueprint-grid" />
         <div className="relative z-10 mx-auto max-w-3xl">
@@ -190,23 +189,13 @@ export default function Home() {
       <div className="border-t border-ink-2 px-6 py-8">
         <div className="mx-auto max-w-3xl flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div className="text-xs text-mist">
-            Built by{' '}
-            
-              href="https://preemptglobal.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold hover:text-gold-light transition-colors"
-            >
-              Preempt Global
-            </a>
-            . All rights reserved.
+            Built by Preempt Global. All rights reserved.
           </div>
           <div className="font-serif text-xs italic text-mist opacity-50">
             Paper mistakes are free.
           </div>
         </div>
       </div>
-
     </div>
   )
 }
