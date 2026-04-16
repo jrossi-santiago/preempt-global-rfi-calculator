@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { calculate, CalculatorInput, CalculatorOutput } from '../lib/calculator'
+import { calculate } from '../lib/calculator'
+import type { CalculatorInput, CalculatorOutput } from '../lib/calculator'
 import InputForm from '../components/Calculator/InputForm'
 import ResultDisplay from '../components/Calculator/ResultDisplay'
 import MitigationPanel from '../components/Calculator/MitigationPanel'
@@ -15,6 +16,15 @@ const DEFAULT_INPUT: CalculatorInput = {
   schedulePressure: 'standard',
   coordinationComplexity: 'medium',
   mitigationFactorIds: [],
+}
+
+function fmtResidual(output: CalculatorOutput): string {
+  function f(n: number): string {
+    if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M'
+    if (n >= 1000) return '$' + Math.round(n / 1000) + 'K'
+    return '$' + Math.round(n).toLocaleString()
+  }
+  return f(output.residualLow) + ' - ' + f(output.residualHigh)
 }
 
 export default function Home() {
@@ -40,9 +50,9 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-ink">
+    <div className="min-h-screen bg-ink">
 
-      <section className="relative overflow-hidden px-6 py-20 md:py-32">
+      <div className="relative overflow-hidden px-6 py-20 md:py-32">
         <div className="blueprint-grid" />
         <div className="relative z-10 mx-auto max-w-3xl">
           <div className="mb-6 text-xs uppercase tracking-widest text-gold">
@@ -63,9 +73,9 @@ export default function Home() {
             Calculate my exposure
           </button>
         </div>
-      </section>
+      </div>
 
-      <section id="calculator" className="px-6 py-16">
+      <div id="calculator" className="px-6 py-16">
         <div className="mx-auto max-w-3xl">
           <div className="mb-3 text-xs uppercase tracking-widest text-gold">
             Your project
@@ -81,10 +91,10 @@ export default function Home() {
             onCalculate={handleCalculate}
           />
         </div>
-      </section>
+      </div>
 
       {hasCalculated && output && (
-        <section id="results" className="px-6 py-16 animate-fade-in">
+        <div id="results" className="px-6 py-16">
           <div className="mx-auto max-w-3xl">
             <div className="mb-3 text-xs uppercase tracking-widest text-gold">
               Your exposure
@@ -94,11 +104,11 @@ export default function Home() {
             </h2>
             <ResultDisplay output={output} />
           </div>
-        </section>
+        </div>
       )}
 
       {hasCalculated && output && (
-        <section className="px-6 py-16 animate-fade-in">
+        <div className="px-6 py-16">
           <div className="mx-auto max-w-3xl">
             <div className="mb-3 text-xs uppercase tracking-widest text-gold">
               Self-mitigation
@@ -116,18 +126,15 @@ export default function Home() {
               onMitigationChange={handleMitigationChange}
             />
           </div>
-        </section>
+        </div>
       )}
 
       {hasCalculated && output && output.atFloor && (
-        <section className="px-6 py-16 floor-fade">
+        <div className="px-6 py-16 floor-fade">
           <div className="mx-auto max-w-3xl">
             <div
               className="rounded-sm p-8 md:p-12"
-              style={{
-                background: '#1C2B3A',
-                borderTop: '1px solid #D4A84B',
-              }}
+              style={{ background: '#1C2B3A', borderTop: '1px solid #D4A84B' }}
             >
               <div className="mb-2 text-xs uppercase tracking-widest text-gold-light">
                 You have hit the floor
@@ -146,16 +153,16 @@ export default function Home() {
                   Your residual exposure
                 </div>
                 <div className="font-serif text-3xl italic text-gold-light md:text-4xl">
-                  {formatResidual(output)}
+                  {fmtResidual(output)}
                 </div>
               </div>
               <EmailCapture output={output} input={input} />
             </div>
           </div>
-        </section>
+        </div>
       )}
 
-      <section className="border-t border-ink-2 px-6 py-20">
+      <div className="border-t border-ink-2 px-6 py-20">
         <div className="mx-auto max-w-3xl">
           <div className="mb-3 text-xs uppercase tracking-widest text-gold">
             Preempt Global
@@ -178,9 +185,9 @@ export default function Home() {
             Request a Red Flag Scan
           </a>
         </div>
-      </section>
+      </div>
 
-      <footer className="border-t border-ink-2 px-6 py-8">
+      <div className="border-t border-ink-2 px-6 py-8">
         <div className="mx-auto max-w-3xl flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div className="text-xs text-mist">
             Built by{' '}
@@ -198,17 +205,8 @@ export default function Home() {
             Paper mistakes are free.
           </div>
         </div>
-      </footer>
+      </div>
 
-    </main>
+    </div>
   )
-}
-
-function formatResidual(output: CalculatorOutput): string {
-  function fmt(n: number): string {
-    if (n >= 1_000_000) return '$' + (n / 1_000_000).toFixed(2) + 'M'
-    if (n >= 1_000) return '$' + Math.round(n / 1_000) + 'K'
-    return '$' + Math.round(n).toLocaleString()
-  }
-  return fmt(output.residualLow) + ' - ' + fmt(output.residualHigh)
 }
