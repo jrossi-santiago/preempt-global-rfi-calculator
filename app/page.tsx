@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useState } from 'react'
 import { calculate } from '../lib/calculator'
 import type { CalculatorInput, CalculatorOutput } from '../lib/calculator'
