@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #B8832A;
+  --gold-light: #D4A84B;
+  --ink: #0C1117;
+  --ink-2: #1C2B3A;
+  --offwhite: #F7F5F0;
+  --mist: #8899AA;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0C1117;
+  color: #F7F5F0;
+  font-family: 'Syne', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Blueprint grid background — very faint, fades at edges */
+.blueprint-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(184, 131, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 131, 42, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Gold top-line accent on cards */
+.card-gold {
+  border-top: 1px solid var(--gold);
+  background-color: #1C2B3A;
+  border-radius: 0 0 4px 4px;
+}
+
+.card-muted {
+  border-top: 1px solid rgba(136, 153, 170, 0.2);
+  background-color: #1C2B3A;
+  border-radius: 0 0 4px 4px;
+}
+
+/* Smooth number transitions */
+.number-transition {
+  transition: all 0.8s ease-out;
+}
+
+/* Toggle switch */
+.toggle-track {
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  transition: background-color 0.2s ease-in-out;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggle-track.on {
+  background-color: var(--gold);
+}
+
+.toggle-track.off {
+  background-color: #1C2B3A;
+  border: 1px solid var(--mist);
+}
+
+.toggle-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #F7F5F0;
+  position: absolute;
+  top: 3px;
+  transition: left 0.2s ease-in-out;
+}
+
+.toggle-track.on .toggle-thumb {
+  left: 21px;
+}
+
+.toggle-track.off .toggle-thumb {
+  left: 3px;
+  background-color: var(--mist);
+}
+
+/* Radial glow behind the main result number */
+.result-glow {
+  position: relative;
+}
+
+.result-glow::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse at center, rgba(184, 131, 42, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.result-glow > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tooltip */
+.tooltip-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--mist);
+  color: var(--mist);
+  font-size: 10px;
+  cursor: pointer;
+  margin-left: 6px;
+  vertical-align: middle;
+  transition: border-color 0.2s, color 0.2s;
+  font-family: 'Syne', sans-serif;
+}
+
+.tooltip-pill:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.tooltip-box {
+  background: #1C2B3A;
+  border: 1px solid rgba(184, 131, 42, 0.3);
+  border-radius: 4px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--mist);
+  line-height: 1.7;
+  margin-top: 8px;
+}
+
+/* Floor section fade-in */
+.floor-fade {
+  animation: floorFade 0.8s ease-out forwards;
+}
+
+@keyframes floorFade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--gold);
+  color: #0C1117;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: var(--gold-light);
+}
+
+/* Input and select base styles */
+.form-input {
+  background-color: #1C2B3A;
+  border: 1px solid rgba(136, 153, 170, 0.25);
+  border-radius: 3px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: 'Syne', sans-serif;
+  color: #F7F5F0;
+  width: 100%;
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.form-input option {
+  background-color: #1C2B3A;
+  color: #F7F5F0;
+}
+
+/* Select arrow */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--mist);
+  pointer-events: none;
+  font-size: 12px;
+}
